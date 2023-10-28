@@ -1,0 +1,33 @@
+@import "breakpoints";
+@import "colors";
+@import "mixins";
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Montserrat:wght@400;500&family=Poppins:wght@400;500&family=Work+Sans:wght@400;500&display=swap');
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    background-color: $color-1;
+    font-family: Poppins;
+    color: $color-2;
+    text-decoration: none;
+}
+
+.navbar{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 1rem 1.5rem 1rem 1.5rem;
+    border-bottom: 1px solid $color-2;
+    h1{
+        color: $color-6;
+    }
+    .navlinks{
+        button{
+            @include commonButton(0.4rem,0.8rem)
+        }
+    }
+}
+.homepage{
+
+}

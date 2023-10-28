@@ -1,0 +1,29 @@
+@mixin commonButton($pad1, $pad2){
+    padding: $pad1 $pad2;
+    background: none;
+    border: 1px solid $color-2;
+    border-radius: 5px;
+    font-size: 1rem;
+    margin-left: 0.5rem;
+    margin-bottom: 0.5rem;
+
+    font-family: Poppins;
+    font-weight: 500;
+    color: $color-2;
+    transition: ease-in-out 0.3s;
+    cursor: pointer;
+    &:hover{
+        background-color: $hover-color;
+        border: 1px solid $color-6;
+        color: $color-6;
+    }
+}
+
+@mixin commonEffect(){
+    display: flex;
+    justify-content:center ;
+    align-items: center;
+    min-height: 100vh;
+    padding: 5rem;
+    background: linear-gradient(112.1deg,  #081327 11.2%, #081427 70.2%);
+}
