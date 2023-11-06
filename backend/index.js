@@ -8,9 +8,11 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 const blogRoutes = require('./routes/blogRoutes')
+const authorRoutes = require('./routes/authorRoutes');
 
 app.use(express.json());
 app.use(cors());
+app.use(express.static('uploads'));
 
 mongoose.connect(DB_URI)
     .then(() =>{
@@ -22,3 +24,4 @@ mongoose.connect(DB_URI)
     .catch(err => console.log(err));
 
     app.use('/api/blogs', blogRoutes);
+    app.use('/api/user', authorRoutes);

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Category from '../components/Category';
-
+import image from '../assets/image.jpg';
 function Blog() {
 
   interface BlogItem {
@@ -8,12 +7,12 @@ function Blog() {
     title: string;
     body: string;
     author: string;
+    image: string;
     category: string;
     createdAt: string;
-    // Add other properties as needed
   }
   const [blogs, setBlogs] = useState<BlogItem[]>([]);
-  const [loading, setLoading] = useState(true); // Add loading state
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     try {
@@ -35,37 +34,55 @@ function Blog() {
   }, []);
 
   return (
+    
     <div className="homepage">
-      <div className="blog-content">
-        {loading ? ( // Display "Loading..." while data is being fetched
-          <h1>Loading...</h1>
-        ) : (
-          <>
+      
+      {loading ? ( 
+        <h1>Loading...</h1>
+      ) : (
+
+        <div className='blogDivs'>
+    
+          <div className="leftDiv">
             {blogs.length > 0 && (
               <div className="left">
-                <h2>{blogs[0].title}</h2>
-                <p>{blogs[0].body}</p>
-                {blogs[0].author} <br />
-                {blogs[0].category} <br />
-                {blogs[0].createdAt} <br />                
+                <div className="image">
+                  <img src={`http://localhost:8000/${blogs[0].image}`} alt="blog_image" />
+                </div>
+                <div className="leftBlogContent">
+                  <h2>{blogs[0].title}</h2>
+                  <p>{blogs[0].body}</p>
+                  <p>{blogs[0].author}</p>
+                  <p>{blogs[0].category}</p>
+                  <p>{blogs[0].createdAt}</p>
+                </div>                
               </div>
-
             )}
-            <div className="right">
-              {blogs.slice(1).map((data) => (
-                <li key={data._id}>
-                  {data.title} <br />
-                  {data.body} <br />
-                  {data.author} <br />
-                  {data.category} <br />
-                  {data.createdAt} <br />
-                </li>
-              ))}
-            </div>
-          </>
-        )}
-      </div>
+          </div>
+  
+          <div className="rightDiv">
+            {blogs.slice(1).map((data) => (
+              <div className="right">
+                <div className="image">
+                  <img src={`http://localhost:8000/${data.image}`} alt="blog_image" />
+                </div>
+                <div className="rightBlogContent">
+                  <h2>{data.title}</h2>
+                  <p>{data.body}</p>
+                  <p>{data.author}</p>
+                  <p>{data.category}</p>
+                  <p>{data.createdAt}</p>                
+                </div>
+              </div>
+            ))}  
+          </div>
+          
+        </div>
+      
+      )}
+    
     </div>
+ 
   );
 }
 

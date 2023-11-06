@@ -28,6 +28,52 @@
         }
     }
 }
-.homepage{
 
+.blogDivs{
+    display: flex;
+
+    .left{
+        display: flex;
+        .image{
+            img{
+                width: 100%;
+            }
+        }
+    }
+    .right{
+        display: flex;
+        .image{
+            img{
+                width: 100%;
+            }
+        }
+    }
+}
+
+.form{
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    form{
+        width: 100%;
+        height: 100%;
+        border: 1px solid $color-2;
+        border-radius: 1rem;
+        padding: 1rem;
+        margin: 1rem;
+        
+    }
+    
+}
+
+.footer{
+position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: grey;
+  color: white;
+  text-align: center;
 }
