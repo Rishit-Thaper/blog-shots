@@ -4,6 +4,10 @@ const Blog = require('../models/blogModel');
 const mongoose = require("mongoose");
 const multer  = require("multer");
 const path = require("path")
+const requireAuth = require('../middleware/requireAuth');
+
+router.use(requireAuth);
+
 
 const storage = multer.diskStorage({
     destination:function(req,file, cb){
@@ -15,7 +19,6 @@ const storage = multer.diskStorage({
 })
 
 const upload = multer({storage: storage}).single("image");
-
 
 router.use((req,res,next )=> {
     console.log(req.path, req.method);
@@ -91,26 +94,33 @@ router.get('/:id', async(req,res)=>{
     
 }
 )
-
+//GET by author 
+router.get('/author/blogs', async (req,res)=>{
+    const user_id = req.user._id;
+    const authorBlogs = await Blog.find({user_id: user_id});
+    res.status(200).json(authorBlogs);
+})
+    
 //POST Blog
 router.post('/addshots',upload,async(req,res) =>{
 
     const {title, body, category, author} = req.body;
     const imageName = req.file.filename;
-
+    const user_id = req.user._id;
     console.log(title);
     console.log(body);
     console.log(category);
     console.log(author);
     console.log(imageName);
-
+    console.log(user_id);
     try{
         const newBlog = await Blog.create({
             title, 
             body, 
             category, 
             author, 
-            image: imageName
+            image: imageName,
+            user_id,
         });
         res.status(200).json(newBlog);
     }catch(error){
@@ -121,7 +131,6 @@ router.post('/addshots',upload,async(req,res) =>{
 //Delete Blog
 router.delete('/delete/:id',async(req,res)=>{
     const {id} = req.params;
-
     if(!mongoose.Types.ObjectId.isValid(id)){
         res.status(400).json(`No blog with this ${id}`);
     }
@@ -136,14 +145,17 @@ router.delete('/delete/:id',async(req,res)=>{
 });
 
 //UPDATE Blog
-router.put('/update/:id',async(req,res)=>{
+router.put('/update/:id',upload,async(req,res)=>{
     const {id} = req.params;
+    const {title, body, category, author} = req.body;
+    const user_id = req.user._id;
 
     if(!mongoose.Types.ObjectId.isValid(id)){
         res.status(400).json(`No blog with this ${id}`);
     }
+
     const updatedBlog = await Blog.findByIdAndUpdate({_id: id},{
-        ...req.body
+        title, body, category, author, user_id
     })
 
     if(!updatedBlog){

@@ -6,8 +6,13 @@ const mongoose = require("mongoose");
 const jwt =  require('jsonwebtoken');
 
 const createToken = (_id) =>{
-    return jwt.sign({_id}, process.env.SECRET, {expiresIn: "3d"});
+    return jwt.sign({_id}, process.env.SECRET, {expiresIn: '5d'});
 }
+
+router.use((req,res,next )=> {
+    console.log(req.path, req.method);
+    next();
+})
 
 router.post('/login', async(req,res)=>{
     const {email, password} = req.body;
@@ -19,7 +24,7 @@ router.post('/login', async(req,res)=>{
 
         res.status(200).json({author, token});
     }catch(error){
-        res.status(400).json({error: error.message})
+        res.status(400).json({ error: error.message });
     }
 
 })
@@ -34,10 +39,11 @@ router.post('/signup', async(req,res)=>{
         
         const token = createToken(author._id);
 
-        res.status(200).json({name, email, token});
+        res.status(200).json({author, token});
     }catch(error){
         res.status(400).json({error: error.message});
     }
 
 })
+
 module.exports = router;
